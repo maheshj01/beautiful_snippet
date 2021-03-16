@@ -7,11 +7,19 @@ import 'package:flutter_template/constants/constants.dart' show BASE_URL;
 
 enum HttpMethod { GET, POST, PUT, DELETE, PATCH }
 
+class HttpResponse {
+  final String message;
+  final Object data;
+  final bool didSucced;
+
+  HttpResponse(this.message, this.data, this.didSucced);
+}
+
 class ApiProvider {
   static String baseUrl = BASE_URL;
   static Duration timeoutDuration = Duration(seconds: 5);
 
-  FutureOr<void> retryOnTimeOut({http.Response response}) async {
+  FutureOr<void> retryOnTimeOut(http.Response response) async {
     try {
       final res = await response.request.send();
       final newResponse = await http.Response.fromStream(res);
@@ -25,10 +33,10 @@ class ApiProvider {
         return json.decode(res.body);
         break;
       case 400:
-        return BadRequestException();
+        return BadRequestException('400');
         break;
       case 404:
-        return ResourceNotFoundException();
+        return ResourceNotFoundException('404');
         break;
       case 500:
         break;
@@ -39,7 +47,7 @@ class ApiProvider {
   }
 
   Future<http.Response> getRequest(String endPoint,
-      {Map<String, dynamic> headers}) async {
+      {Map<String, String>? headers}) async {
     var responseJson;
     try {
       final response = await http
@@ -56,7 +64,7 @@ class ApiProvider {
   }
 
   Future<http.Response> postRequest(String endPoint,
-      {Map<String, dynamic> body, Map<String, dynamic> headers}) async {
+      {Map<String, dynamic>? body, Map<String, String>? headers}) async {
     var responseJson;
     try {
       final response = await http
@@ -73,7 +81,8 @@ class ApiProvider {
   }
 
   Future<http.Response> putRequest(String endPoint,
-      {Map<String, dynamic> body, Map<String, dynamic> headers}) async {
+      {required Map<String, dynamic> body,
+      Map<String, String>? headers}) async {
     var responseJson;
     try {
       final response = await http
@@ -90,7 +99,8 @@ class ApiProvider {
   }
 
   Future<http.Response> deleteRequest(String endPoint,
-      {Map<String, dynamic> body, Map<String, dynamic> headers}) async {
+      {required Map<String, dynamic> body,
+      Map<String, String>? headers}) async {
     var responseJson;
     try {
       final response = await http
@@ -107,7 +117,8 @@ class ApiProvider {
   }
 
   Future<http.Response> patchRequest(String endPoint,
-      {Map<String, dynamic> body, Map<String, dynamic> headers}) async {
+      {required Map<String, dynamic> body,
+      Map<String, String>? headers}) async {
     final response = await http.patch(BASE_URL + endPoint);
     var responseJson;
     try {
