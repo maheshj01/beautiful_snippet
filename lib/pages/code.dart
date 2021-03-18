@@ -1,22 +1,22 @@
 import 'dart:typed_data';
 import 'dart:html' as html;
-import 'dart:ui' as ui;
 import 'dart:js' as js;
+import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:highlight/languages/dart.dart';
 import 'package:flutter_highlight/themes/monokai-sublime.dart';
 import 'package:code_text_field/code_text_field.dart';
 
-class WindowBuilder extends StatefulWidget {
+class BackgroundBuilder extends StatefulWidget {
   @override
-  _WindowBuilderState createState() => _WindowBuilderState();
+  _BackgroundBuilderState createState() => _BackgroundBuilderState();
 }
 
-class _WindowBuilderState extends State<WindowBuilder> {
-  final double borderRadius = 5;
+class _BackgroundBuilderState extends State<BackgroundBuilder> {
   final key = GlobalKey();
-  void saveAs(List<int> bytes, String fileName) {
+
+  void save(List<int> bytes, String fileName) {
     js.context.callMethod("saveAs", <Object>[
       html.Blob(<List<int>>[bytes]),
       fileName
@@ -31,62 +31,83 @@ class _WindowBuilderState extends State<WindowBuilder> {
 
     ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
     Uint8List pngBytes = byteData!.buffer.asUint8List();
-    saveAs(pngBytes, "code.png");
+    save(pngBytes, "code.png");
   }
 
-  late Uint8List bytes = Uint8List(0);
+  @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Scaffold(
+      backgroundColor: Colors.black,
       appBar: AppBar(
         title: Text('Beautiful Code'),
         actions: [
           IconButton(
-            icon: Icon(Icons.download_rounded),
-            onPressed: () => saveCode(1.5),
-          )
+              icon: Icon(Icons.download_rounded),
+              onPressed: () => saveCode(1.5))
         ],
       ),
-      body: Center(
-        child: SingleChildScrollView(
-          child: RepaintBoundary(
+      body: LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) {
+          final width = MediaQuery.of(context).size.width;
+          return Center(
+              child: SingleChildScrollView(
+                  child: RepaintBoundary(
             key: key,
             child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Align(
-                  alignment: Alignment.center,
-                  child: Container(
-                    width: MediaQuery.of(context).size.width * 0.8,
-                    decoration: BoxDecoration(
-                      color: Colors.black,
-                      borderRadius: BorderRadius.circular(5),
-                      boxShadow: [
-                        BoxShadow(
-                            blurRadius: 10,
-                            spreadRadius: 5,
-                            color: Colors.grey,
-                            offset: Offset(4, 10)),
-                        BoxShadow(
-                            blurRadius: 20,
-                            spreadRadius: 10,
-                            color: Color.fromRGBO(206, 213, 222, 0.8))
-                      ],
-                    ),
-                    child: Column(
-                      children: [
-                        HeaderBuilder(
-                            // headerColor: Colors.grey,
-                            ),
-                        CodeEditor(),
-                      ],
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                      width: constraints.maxWidth > 600 ? width * 0.6 : width,
+                      padding: EdgeInsets.all(50),
+                      // alignment: Alignment.center,
+                      color: Colors.white,
+                      child: ConstrainedBox(
+                          constraints: BoxConstraints(
+                              maxWidth:
+                                  MediaQuery.of(context).size.width * 0.6),
+                          child: WindowBuilder())),
+                ]),
+          )));
+        },
+      ),
+    );
+  }
+}
+
+class WindowBuilder extends StatefulWidget {
+  @override
+  _WindowBuilderState createState() => _WindowBuilderState();
+}
+
+class _WindowBuilderState extends State<WindowBuilder> {
+  final double borderRadius = 5;
+
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return Align(
+      alignment: Alignment.center,
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.black,
+          borderRadius: BorderRadius.circular(5),
+          boxShadow: [
+            BoxShadow(
+                blurRadius: 10,
+                spreadRadius: 5,
+                color: Colors.grey,
+                offset: Offset(4, 10)),
+            BoxShadow(
+                blurRadius: 20,
+                spreadRadius: 10,
+                color: Color.fromRGBO(206, 213, 222, 0.8))
+          ],
+        ),
+        child: Column(
+          children: [
+            HeaderBuilder(),
+            CodeEditor(),
+          ],
         ),
       ),
     );
