@@ -4,45 +4,45 @@ import 'package:code_text_field/code_text_field.dart';
 import 'package:flutter_highlight/theme_map.dart';
 import 'package:highlight/languages/all.dart';
 
-class WindowBuilder extends StatefulWidget {
+class SnippetBuilder extends StatefulWidget {
   final double borderRadius;
 
-  const WindowBuilder({Key? key, this.borderRadius = 10}) : super(key: key);
+  const SnippetBuilder({Key? key, this.borderRadius = 10}) : super(key: key);
 
   @override
-  _WindowBuilderState createState() => _WindowBuilderState();
+  _SnippetBuilderState createState() => _SnippetBuilderState();
 }
 
-class _WindowBuilderState extends State<WindowBuilder> {
+// TODO: Themes and Color Schemes supported
+/// theme: 'gradient-dark', //black
+/// theme: 'an-old-hope', //black
+/// theme: 'xcode', //white
+//
+
+class _SnippetBuilderState extends State<SnippetBuilder> {
   Widget build(BuildContext context) {
-    return Align(
+    return Container(
       alignment: Alignment.center,
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(widget.borderRadius),
-          boxShadow: [
-            BoxShadow(
-                blurRadius: 10,
-                spreadRadius: 5,
-                color: Colors.grey.withOpacity(0.4),
-                offset: Offset(3, 6)),
-            BoxShadow(
-                blurRadius: 20,
-                spreadRadius: 10,
-                color: Color.fromRGBO(206, 213, 222, 0.8))
-          ],
-        ),
-        child: Column(
-          children: [
-            HeaderBuilder(),
-            CodeEditor(
-              backgroundColor: Colors.white,
-              // theme: 'gradient-dark', //black
-              // theme: 'an-old-hope', //black
-              theme: 'xcode', //white
-            ),
-          ],
-        ),
+      decoration: BoxDecoration(
+        color: white, //TODO: ADD BACKGROUND CODE COLOR
+        borderRadius: BorderRadius.circular(widget.borderRadius),
+        border: Border.all(color: red),
+        boxShadow: [
+          BoxShadow(
+              blurRadius: 15,
+              spreadRadius: 8,
+              color: Colors.black.withOpacity(0.3),
+              offset: Offset(3, 4)),
+        ],
+      ),
+      child: Column(
+        children: [
+          HeaderBuilder(),
+          CodeEditor(
+            backgroundColor: white, //TODO: ADD BACKGROUND CODE COLOR
+            theme: 'xcode', //white
+          ),
+        ],
       ),
     );
   }
@@ -52,7 +52,7 @@ class HeaderBuilder extends StatelessWidget {
   final Color headerColor;
   final double borderRadius;
   const HeaderBuilder(
-      {Key? key, this.headerColor = Colors.black, this.borderRadius = 10})
+      {Key? key, this.headerColor = black, this.borderRadius = 10})
       : super(key: key);
 
   Widget circle(Color color, {double size = 15}) {
@@ -65,14 +65,13 @@ class HeaderBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 30,
       decoration: BoxDecoration(
           color: headerColor,
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(borderRadius),
               topRight: Radius.circular(borderRadius))),
       child: Padding(
-        padding: const EdgeInsets.all(8),
+        padding: const EdgeInsets.all(12),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -146,12 +145,14 @@ class _CodeEditorState extends State<CodeEditor> {
   Widget build(BuildContext context) {
     return CodeField(
       controller: _codeController!,
-      cursorColor: Colors.white,
+      cursorColor: white,
       minLines: 10,
-      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+      padding: EdgeInsets.symmetric(
+            horizontal: 8,
+          ) +
+          EdgeInsets.only(bottom: 8),
       decoration: BoxDecoration(
           color: widget.backgroundColor,
-          border: Border.all(color: Colors.black),
           borderRadius: BorderRadius.only(
               bottomLeft: Radius.circular(5), bottomRight: Radius.circular(5))),
       showLines: false,

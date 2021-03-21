@@ -1,3 +1,3 @@
 /// app string constants  from the UI go here in this page
 /// e.g
-const String APP_TITLE = 'Beautiful Code';
+const String APP_TITLE = 'Beautiful Snippet';
