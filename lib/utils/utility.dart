@@ -5,4 +5,12 @@
  * the Single responsibility princple
  */
 
-int squareOfNumber(int x) => x * x;
+import 'dart:html' as html;
+import 'dart:js' as js;
+
+void save(List<int> bytes, String fileName) {
+  js.context.callMethod("saveAs", <Object>[
+    html.Blob(<List<int>>[bytes]),
+    fileName
+  ]);
+}
