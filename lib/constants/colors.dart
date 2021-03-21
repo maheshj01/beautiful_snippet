@@ -6,5 +6,7 @@ import 'package:flutter/material.dart';
 const Color white = Colors.white;
 const Color black = Colors.black;
 const Color red = Colors.red;
-const Color green = Colors.black;
+const Color green = Colors.green;
 Color orange = Colors.amberAccent.shade400;
+
+/// SNIPPET BACKGROUND COLORS

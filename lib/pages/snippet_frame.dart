@@ -2,15 +2,17 @@ import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter_template/pages/window.dart';
+import 'package:flutter_template/exports.dart';
+import 'package:flutter_template/pages/snippet.dart';
 import 'package:flutter_template/utils/utility.dart';
 
-class BackgroundBuilder extends StatefulWidget {
+/// Widget to take the screenshot of
+class SnippetFrame extends StatefulWidget {
   @override
-  _BackgroundBuilderState createState() => _BackgroundBuilderState();
+  _SnippetFrameState createState() => _SnippetFrameState();
 }
 
-class _BackgroundBuilderState extends State<BackgroundBuilder> {
+class _SnippetFrameState extends State<SnippetFrame> {
   final key = GlobalKey();
 
   void generateImageBytes(double ratio) async {
@@ -26,13 +28,17 @@ class _BackgroundBuilderState extends State<BackgroundBuilder> {
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
-        backgroundColor: Colors.black.withOpacity(0.5),
+        backgroundColor: Colors.blueAccent,
         appBar: AppBar(
-          title: Text('Beautiful Snippet'),
+          title: Text('$APP_TITLE'),
+          centerTitle: false,
           actions: [
             IconButton(
                 icon: Icon(Icons.download_rounded),
-                onPressed: () => generateImageBytes(1.5))
+                onPressed: () => generateImageBytes(1.5)),
+            SizedBox(
+              width: 10,
+            )
           ],
         ),
         body: Column(
@@ -52,14 +58,13 @@ class _BackgroundBuilderState extends State<BackgroundBuilder> {
                           children: [
                             Container(
                                 width: width * 0.6,
+                                color: Colors.blueAccent,
                                 padding: EdgeInsets.all(50),
-                                color: Colors.white,
                                 child: ConstrainedBox(
                                     constraints: BoxConstraints(
-                                        maxWidth:
-                                            MediaQuery.of(context).size.width *
-                                                0.6),
-                                    child: WindowBuilder())),
+                                        minWidth: width * 0.3,
+                                        maxWidth: width * 0.6),
+                                    child: SnippetBuilder())),
                           ]),
                     ))),
                   ),
