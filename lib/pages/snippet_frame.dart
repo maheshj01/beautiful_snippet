@@ -63,46 +63,43 @@ class _SnippetFrameState extends State<SnippetFrame> {
               Expanded(
                 child: Center(
                     child: SingleChildScrollView(
-                        child: RepaintBoundary(
-                  key: key,
-                  child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          height: 100,
-                          width: width * 0.2,
-                          alignment: Alignment.center,
-                          child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemBuilder: (_, x) => Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 8),
-                              child: CircularColor(
-                                selectedColor: specs.backgroundColor,
-                                color: backgroundColors[x],
-                                onTap: () {
-                                  specs.backgroundColor = backgroundColors[x];
-                                },
-                              ),
+                        child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                      Container(
+                        height: 100,
+                        width: width * 0.2,
+                        alignment: Alignment.center,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (_, x) => Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            child: CircularColor(
+                              selectedColor: specs.backgroundColor,
+                              color: backgroundColors[x],
+                              onTap: () {
+                                specs.backgroundColor = backgroundColors[x];
+                              },
                             ),
-                            itemCount: backgroundColors.length,
                           ),
+                          itemCount: backgroundColors.length,
                         ),
-                        Container(
+                      ),
+                      RepaintBoundary(
+                        key: key,
+                        child: Container(
                             width: width * 0.6,
                             color: specs.backgroundColor,
-
-                            /// TODO: Change background color here
                             padding: EdgeInsets.all(50),
                             child: ConstrainedBox(
                                 constraints: BoxConstraints(
                                     minWidth: width * 0.3,
                                     maxWidth: width * 0.6),
                                 child: SnippetBuilder())),
-                      ]),
-                ))),
+                      ),
+                    ]))),
               ),
               // Container(width: width * 0.25, child: SideBar()),
             ],
