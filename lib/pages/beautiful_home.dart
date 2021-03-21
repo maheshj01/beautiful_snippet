@@ -14,11 +14,15 @@ class _BeautifulHomeState extends State<BeautifulHome> {
     return Scaffold(
       backgroundColor: Colors.blueAccent,
       appBar: AppBar(
-        title: Text('$APP_TITLE'),
+        title: Text('$APP_TITLE', style: TextStyle(color: black, fontSize: 18)),
+        backgroundColor: white,
         centerTitle: false,
         actions: [
           IconButton(
-              icon: Icon(Icons.download_rounded),
+              icon: Icon(
+                Icons.download_rounded,
+                color: Colors.blueAccent,
+              ),
               onPressed: () => snippetController.generateImage()),
           SizedBox(
             width: 10,
