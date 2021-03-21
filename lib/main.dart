@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_template/pages/snippet_frame.dart';
+import 'package:flutter_template/pages/beautiful_home.dart';
 import 'constants/constants.dart' show APP_TITLE;
 
 void main() {
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: SnippetFrame(),
+      home: BeautifulHome(),
     );
   }
 }
