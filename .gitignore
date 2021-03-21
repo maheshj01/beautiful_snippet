@@ -24,6 +24,7 @@ doc/api/
 .buildlog/
 .history
 .svn/
+.firebase
 
 # IntelliJ related
 *.iml
@@ -44,6 +45,8 @@ doc/api/
 .pub-cache/
 .pub/
 /build/
+firebase.json
+flutter_template.iml
 /lib/models/*.g.dart
 
 # Android related
