@@ -1,4 +1,4 @@
-package com.example.beautiful_snippet
+package com.beautiful.snippet
 
 import io.flutter.embedding.android.FlutterActivity
 
