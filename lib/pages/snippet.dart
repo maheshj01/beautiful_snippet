@@ -113,7 +113,7 @@ class _CodeEditorState extends State<CodeEditor> {
 
   const CodeEditor(
       {Key? key,
-      this.language = 'dart',
+      this.language = 'Dart',
       this.theme = 'dark',
       this.backgroundColor = Colors.black})
       : super(key: key);
@@ -151,6 +151,7 @@ class _CodeEditorState extends State<CodeEditor> {
             horizontal: 8,
           ) +
           EdgeInsets.only(bottom: 8),
+      margin: EdgeInsets.only(bottom: 5),
       decoration: BoxDecoration(
           color: widget.backgroundColor,
           borderRadius: BorderRadius.only(
