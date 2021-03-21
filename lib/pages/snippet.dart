@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_template/constants/colors.dart';
+import 'package:beautiful_snippet/constants/colors.dart';
 import 'package:code_text_field/code_text_field.dart';
 import 'package:flutter_highlight/theme_map.dart';
 import 'package:highlight/languages/all.dart';
@@ -106,20 +106,7 @@ class CodeEditor extends StatefulWidget {
 class _CodeEditorState extends State<CodeEditor> {
   CodeController? _codeController;
   final source = """
-  class CodeEditor extends StatefulWidget {
-  final String language;
-  final String theme;
-  final Color backgroundColor;
-
-  const CodeEditor(
-      {Key? key,
-      this.language = 'Dart',
-      this.theme = 'dark',
-      this.backgroundColor = Colors.black})
-      : super(key: key);
-  @override
-  _CodeEditorState createState() => _CodeEditorState();
-}
+//  Lets Write Some dart
   """;
 
   @override
@@ -145,7 +132,7 @@ class _CodeEditorState extends State<CodeEditor> {
   Widget build(BuildContext context) {
     return CodeField(
       controller: _codeController!,
-      cursorColor: white,
+      cursorColor: black,
       minLines: 10,
       padding: EdgeInsets.symmetric(
             horizontal: 8,

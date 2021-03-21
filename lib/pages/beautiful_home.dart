@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_template/exports.dart';
-import 'package:flutter_template/pages/snippet_frame.dart';
+import 'package:beautiful_snippet/exports.dart';
+import 'package:beautiful_snippet/pages/snippet_frame.dart';
 
 class BeautifulHome extends StatefulWidget {
   @override

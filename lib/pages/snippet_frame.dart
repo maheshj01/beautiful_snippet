@@ -2,8 +2,8 @@ import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter_template/pages/snippet.dart';
-import 'package:flutter_template/utils/utility.dart';
+import 'package:beautiful_snippet/pages/snippet.dart';
+import 'package:beautiful_snippet/utils/utility.dart';
 
 class SnippetController {
   late void Function() generateImage;
@@ -70,7 +70,7 @@ class _SnippetFrameState extends State<SnippetFrame> {
                       ]),
                 ))),
               ),
-              Container(width: width * 0.25, child: SideBar()),
+              // Container(width: width * 0.25, child: SideBar()),
             ],
           ),
         ),
