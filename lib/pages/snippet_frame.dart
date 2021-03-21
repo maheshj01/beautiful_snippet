@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:beautiful_snippet/pages/snippet.dart';
 import 'package:beautiful_snippet/utils/utility.dart';
+import 'package:beautiful_snippet/models/specsmodel.dart';
+import 'package:provider/provider.dart';
 
 class SnippetController {
   late void Function() generateImage;
@@ -40,8 +42,17 @@ class _SnippetFrameState extends State<SnippetFrame> {
 
   final key = GlobalKey();
 
+  List<Color> backgroundColors = [
+    Colors.blueAccent,
+    Colors.greenAccent,
+    Colors.white,
+    Colors.purple,
+    Colors.orange
+  ];
+  Color selectedColor = Colors.white;
   @override
   Widget build(BuildContext context) {
+    final specs = Provider.of<SpecsModel>(context, listen: false);
     final width = MediaQuery.of(context).size.width;
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -57,10 +68,33 @@ class _SnippetFrameState extends State<SnippetFrame> {
                   child: Column(
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Container(
+                          height: 100,
+                          width: width * 0.2,
+                          alignment: Alignment.center,
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (_, x) => Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 8),
+                              child: CircularColor(
+                                selectedColor: specs.backgroundColor,
+                                color: backgroundColors[x],
+                                onTap: () {
+                                  specs.backgroundColor = backgroundColors[x];
+                                },
+                              ),
+                            ),
+                            itemCount: backgroundColors.length,
+                          ),
+                        ),
+                        Container(
                             width: width * 0.6,
-                            color: Colors.blueAccent,
+                            color: specs.backgroundColor,
+
+                            /// TODO: Change background color here
                             padding: EdgeInsets.all(50),
                             child: ConstrainedBox(
                                 constraints: BoxConstraints(
@@ -75,6 +109,40 @@ class _SnippetFrameState extends State<SnippetFrame> {
           ),
         ),
       ],
+    );
+  }
+}
+
+class CircularColor extends StatelessWidget {
+  final Color color;
+  final Color selectedColor;
+  final double borderRadius;
+  final Function() onTap;
+
+  const CircularColor(
+      {Key? key,
+      required this.color,
+      required this.selectedColor,
+      required this.onTap,
+      this.borderRadius = 50.0})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    bool isSelected = false;
+    if (selectedColor != null) {
+      isSelected = (color == selectedColor);
+    }
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: isSelected ? borderRadius + 5.0 : borderRadius,
+        height: isSelected ? borderRadius + 5.0 : borderRadius,
+        decoration: BoxDecoration(
+            border: isSelected ? Border.all(color: Colors.red) : null,
+            shape: BoxShape.circle,
+            color: color),
+      ),
     );
   }
 }

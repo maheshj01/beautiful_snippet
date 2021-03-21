@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:beautiful_snippet/exports.dart';
 import 'package:beautiful_snippet/pages/snippet_frame.dart';
+import 'package:beautiful_snippet/models/specsmodel.dart';
+import 'package:provider/provider.dart';
 
 class BeautifulHome extends StatefulWidget {
   @override
@@ -11,17 +13,21 @@ class _BeautifulHomeState extends State<BeautifulHome> {
   SnippetController snippetController = SnippetController();
   @override
   Widget build(BuildContext context) {
+    final specs = Provider.of<SpecsModel>(context, listen: false);
     return Scaffold(
-      backgroundColor: Colors.blueAccent,
+      backgroundColor: specs.backgroundColor,
       appBar: AppBar(
-        title: Text('$APP_TITLE', style: TextStyle(color: black, fontSize: 18)),
-        backgroundColor: white,
+        title: Text('$APP_TITLE',
+            style: TextStyle(
+                color: specs.backgroundColor == white ? white : black,
+                fontSize: 18)),
+        backgroundColor: specs.backgroundColor == white ? black : white,
         centerTitle: false,
         actions: [
           IconButton(
               icon: Icon(
                 Icons.download_rounded,
-                color: Colors.blueAccent,
+                color: specs.backgroundColor,
               ),
               onPressed: () => snippetController.generateImage()),
           SizedBox(
