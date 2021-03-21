@@ -1,5 +1,5 @@
-name: flutter_template
-description: A new Flutter project.
+name: beautiful_snippet
+description: A Flutter tool to generate beautful image code snippets.which can be used across various blogging platforms.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.
@@ -15,7 +15,7 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.0+1
+version: 0.1.0+1
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
@@ -29,13 +29,13 @@ dependencies:
     git:
       url: https://github.com/maheshmnj/code_field.git
   cupertino_icons: ^1.0.2
-  http: ^0.12.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_cupertino_localizations: ^1.0.1
   flutter_launcher_icons: ^0.8.1
+  http: ^0.12.2
   logger: ^0.9.4
 
 # For information on the generic Dart part of this file, see the
