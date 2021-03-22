@@ -115,19 +115,17 @@ class _ColorPickerState extends State<ColorPicker> {
                   selectedIndex = x;
                 });
               },
-              diameterRatio: 0.6,
+              diameterRatio: 1.2,
               controller: _scrollController,
               children: List.generate(
                   itemCount,
-                  (x) => RotatedBox(
-                      quarterTurns: 1,
-                      child: Container(
-                          alignment: Alignment.center,
-                          child: CircularColor(
-                            color: backgroundColors[x],
-                            selectedColor: backgroundColors[selectedIndex],
-                            borderRadius: x == selectedIndex ? 60 : 50,
-                          )))),
+                  (x) => Container(
+                      alignment: Alignment.center,
+                      child: CircularColor(
+                        color: backgroundColors[x],
+                        selectedColor: backgroundColors[selectedIndex],
+                        borderRadius: x == selectedIndex ? 60 : 50,
+                      ))),
               itemExtent: itemWidth,
             )));
   }
@@ -137,13 +135,11 @@ class CircularColor extends StatelessWidget {
   final Color color;
   final Color selectedColor;
   final double borderRadius;
-  // final Function() onTap;
 
   const CircularColor(
       {Key? key,
       required this.color,
       required this.selectedColor,
-      // required this.onTap,
       this.borderRadius = 50.0})
       : super(key: key);
 
