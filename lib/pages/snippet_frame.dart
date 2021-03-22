@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 import 'dart:ui' as ui;
+import 'package:beautiful_snippet/exports.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:beautiful_snippet/pages/snippet.dart';
@@ -34,23 +35,8 @@ class _SnippetFrameState extends State<SnippetFrame> {
     save(pngBytes, "code.png");
   }
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
-
   final key = GlobalKey();
 
-  List<Color> backgroundColors = [
-    Colors.blueAccent,
-    Colors.greenAccent,
-    Colors.white,
-    Colors.purple,
-    Colors.orange
-  ];
-  Color selectedColor = Colors.white;
-  @override
   Widget build(BuildContext context) {
     final specs = Provider.of<SpecsModel>(context, listen: false);
     final width = MediaQuery.of(context).size.width;
@@ -69,24 +55,10 @@ class _SnippetFrameState extends State<SnippetFrame> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                       Container(
-                        height: 100,
-                        width: width * 0.2,
-                        alignment: Alignment.center,
-                        child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemBuilder: (_, x) => Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8),
-                            child: CircularColor(
-                              selectedColor: specs.backgroundColor,
-                              color: backgroundColors[x],
-                              onTap: () {
-                                specs.backgroundColor = backgroundColors[x];
-                              },
-                            ),
-                          ),
-                          itemCount: backgroundColors.length,
-                        ),
-                      ),
+                          height: 100,
+                          width: width * 0.5,
+                          alignment: Alignment.center,
+                          child: ColorPicker()),
                       RepaintBoundary(
                         key: key,
                         child: Container(
@@ -110,17 +82,68 @@ class _SnippetFrameState extends State<SnippetFrame> {
   }
 }
 
+class ColorPicker extends StatefulWidget {
+  @override
+  _ColorPickerState createState() => _ColorPickerState();
+}
+
+class _ColorPickerState extends State<ColorPicker> {
+  double itemWidth = 80.0;
+  int itemCount = backgroundColors.length;
+  late FixedExtentScrollController _scrollController;
+  late int selectedIndex;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    selectedIndex = itemCount ~/ 2;
+    _scrollController =
+        FixedExtentScrollController(initialItem: itemCount ~/ 2);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final specs = Provider.of<SpecsModel>(context, listen: false);
+    return Center(
+        child: RotatedBox(
+            quarterTurns: -1,
+            child: ListWheelScrollView(
+              onSelectedItemChanged: (x) {
+                specs.backgroundColor = backgroundColors[x];
+                setState(() {
+                  selectedIndex = x;
+                });
+              },
+              diameterRatio: 0.6,
+              controller: _scrollController,
+              children: List.generate(
+                  itemCount,
+                  (x) => RotatedBox(
+                      quarterTurns: 1,
+                      child: Container(
+                          alignment: Alignment.center,
+                          child: CircularColor(
+                            color: backgroundColors[x],
+                            selectedColor: backgroundColors[selectedIndex],
+                            borderRadius: x == selectedIndex ? 60 : 50,
+                          )))),
+              itemExtent: itemWidth,
+            )));
+  }
+}
+
 class CircularColor extends StatelessWidget {
   final Color color;
   final Color selectedColor;
   final double borderRadius;
-  final Function() onTap;
+  // final Function() onTap;
 
   const CircularColor(
       {Key? key,
       required this.color,
       required this.selectedColor,
-      required this.onTap,
+      // required this.onTap,
       this.borderRadius = 50.0})
       : super(key: key);
 
@@ -130,16 +153,14 @@ class CircularColor extends StatelessWidget {
     if (selectedColor != null) {
       isSelected = (color == selectedColor);
     }
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        width: isSelected ? borderRadius + 5.0 : borderRadius,
-        height: isSelected ? borderRadius + 5.0 : borderRadius,
-        decoration: BoxDecoration(
-            border: isSelected ? Border.all(color: Colors.red) : null,
-            shape: BoxShape.circle,
-            color: color),
-      ),
+    return AnimatedContainer(
+      duration: Duration(milliseconds: 400),
+      width: borderRadius,
+      height: borderRadius,
+      decoration: BoxDecoration(
+          border: isSelected ? Border.all(color: Colors.red, width: 2.0) : null,
+          shape: BoxShape.circle,
+          color: color),
     );
   }
 }

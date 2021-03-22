@@ -10,3 +10,10 @@ const Color green = Colors.green;
 Color orange = Colors.amberAccent.shade400;
 
 /// SNIPPET BACKGROUND COLORS
+  final List<Color> backgroundColors = [
+    Colors.blueAccent,
+    Colors.greenAccent,
+    Colors.white,
+    Colors.purple,
+    Colors.orange
+  ];
