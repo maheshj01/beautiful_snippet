@@ -20,7 +20,7 @@ class _BeautifulHomeState extends State<BeautifulHome> {
         title: Text('$APP_TITLE',
             style: TextStyle(
                 color: specs.backgroundColor == white ? white : black,
-                fontSize: 18)),
+                fontSize: font_h3)),
         backgroundColor: specs.backgroundColor == white ? black : white,
         centerTitle: false,
         actions: [

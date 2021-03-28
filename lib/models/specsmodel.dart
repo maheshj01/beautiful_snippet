@@ -8,6 +8,7 @@ class SpecsModel extends ChangeNotifier {
   Color _borderColor = Colors.black;
   AppTheme _theme = AppTheme.dark;
   CodeTheme _codeTheme = CodeTheme.monokai;
+  bool _hasBorder = true;
 
   Color get backgroundColor => _backgroundColor;
   set backgroundColor(Color bgColor) {
@@ -15,9 +16,15 @@ class SpecsModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  bool get hasBorder => _hasBorder;
+  set hasBorder(bool value) {
+    _hasBorder = value;
+    notifyListeners();
+  }
+
   Color get borderColor => _borderColor;
   set borderColor(Color borderColor) {
-    _backgroundColor = borderColor;
+    _borderColor = borderColor;
     notifyListeners();
   }
 
