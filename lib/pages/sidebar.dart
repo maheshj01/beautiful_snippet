@@ -100,6 +100,9 @@ class _SideBarState extends State<SideBar> {
       case 'Code Theme':
         return Column(
           children: [
+            SizedBox(
+              height: padding_small,
+            ),
             _headerBuilder('Language'),
             Padding(
               padding: const EdgeInsets.all(8.0),
