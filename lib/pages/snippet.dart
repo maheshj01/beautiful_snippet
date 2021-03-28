@@ -28,7 +28,6 @@ class _SnippetBuilderState extends State<SnippetBuilder> {
     return Container(
       alignment: Alignment.center,
       decoration: BoxDecoration(
-        color: white, //TODO: ADD BACKGROUND CODE COLOR
         borderRadius: BorderRadius.circular(widget.borderRadius),
         border: specs.hasBorder ? Border.all(color: specs.borderColor) : null,
         boxShadow: [
@@ -41,10 +40,17 @@ class _SnippetBuilderState extends State<SnippetBuilder> {
       ),
       child: Column(
         children: [
-          HeaderBuilder(),
+          HeaderBuilder(
+            headerColor: specs.snippetHeaderColor,
+          ),
           CodeEditor(
-            backgroundColor: white, //TODO: ADD BACKGROUND CODE COLOR
-            theme: 'xcode', //white
+            backgroundColor:
+                specs.snippetBackgroundColor, //TODO: ADD BACKGROUND CODE COLOR
+            theme: 'an-old-hope', //white
+            source: specs.sourceCode,
+            onChange: (x) {
+              specs.sourceCode = x;
+            },
           ),
         ],
       ),
@@ -96,11 +102,15 @@ class CodeEditor extends StatefulWidget {
   final String language;
   final String theme;
   final Color backgroundColor;
+  final String source;
+  final Function(String)? onChange;
 
   const CodeEditor(
       {Key? key,
       this.language = 'dart',
       this.theme = 'dark',
+      required this.source,
+      this.onChange,
       this.backgroundColor = Colors.black})
       : super(key: key);
   @override
@@ -109,16 +119,13 @@ class CodeEditor extends StatefulWidget {
 
 class _CodeEditorState extends State<CodeEditor> {
   CodeController? _codeController;
-  final source = """
-//  Lets Write Some dart
-  """;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     _codeController = CodeController(
-        text: source,
+        text: widget.source,
         language: allLanguages[widget.language],
         patternMap: {
           r"\B#[a-zA-Z0-9]+\b": TextStyle(color: Colors.red),
@@ -136,17 +143,19 @@ class _CodeEditorState extends State<CodeEditor> {
   Widget build(BuildContext context) {
     return CodeField(
       controller: _codeController!,
-      cursorColor: black,
+      cursorColor: Colors.blueAccent,
       minLines: 10,
       padding: EdgeInsets.symmetric(
             horizontal: padding_small,
           ) +
           EdgeInsets.only(bottom: padding_small),
-      margin: EdgeInsets.only(bottom: 5),
+      onChange: (x) => widget.onChange!(x),
+      lineNumberStyle: LineNumberStyle(margin: 25.0),
       decoration: BoxDecoration(
           color: widget.backgroundColor,
           borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(5), bottomRight: Radius.circular(5))),
+              bottomLeft: Radius.circular(10),
+              bottomRight: Radius.circular(10))),
       showLines: false,
       textStyle: TextStyle(
         fontFamily: 'SourceCode',

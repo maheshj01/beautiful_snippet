@@ -11,19 +11,29 @@ const Color green = Colors.green;
 Color orange = Colors.amberAccent.shade400;
 
 /// SNIPPET BACKGROUND COLORS
-final List<Color> backgroundColors = [
+const List<Color> backgroundColors = [
   Colors.blueAccent,
   Colors.greenAccent,
   Colors.white,
+  Colors.orange,
   Colors.purple,
-  Colors.orange
+  Colors.red,
 ];
-final List<Color> borderColors = [
+const List<Color> borderColors = [
   Colors.black,
   Colors.blue,
   Colors.brown,
+  Colors.orange,
   Colors.white,
   Colors.green,
-  Colors.deepOrange,
+  Colors.red,
+];
+const List<Color> snippetBackgroundColors = [
+  Colors.black,
+  Colors.white,
+];
+const List<Color> snippetHeaderColors = [
+  Colors.white,
+  Colors.black,
   Colors.red,
 ];

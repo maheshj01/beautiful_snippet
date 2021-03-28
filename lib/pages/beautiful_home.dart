@@ -29,7 +29,10 @@ class _BeautifulHomeState extends State<BeautifulHome> {
                 Icons.download_rounded,
                 color: specs.backgroundColor,
               ),
-              onPressed: () => snippetController.generateImage()),
+              onPressed: () {
+                FocusScope.of(context).unfocus();
+                snippetController.generateImage();
+              }),
           SizedBox(
             width: 10,
           )
