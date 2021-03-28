@@ -115,29 +115,28 @@ class _ColorPickerState extends State<ColorPicker> {
   late SpecsModel specs;
   @override
   Widget build(BuildContext context) {
-    return Center(
-        child: RotatedBox(
-            quarterTurns: -1,
-            child: ListWheelScrollView(
-              onSelectedItemChanged: (x) {
-                specs.backgroundColor = backgroundColors[x];
-                setState(() {
-                  selectedIndex = x;
-                });
-              },
-              diameterRatio: 1.5,
-              controller: _scrollController,
-              children: List.generate(
-                  itemCount,
-                  (x) => Container(
-                      alignment: Alignment.center,
-                      child: CircularColor(
-                        color: backgroundColors[x],
-                        selectedColor: backgroundColors[selectedIndex],
-                        borderRadius: x == selectedIndex ? 70 : 45,
-                      ))),
-              itemExtent: itemWidth,
-            )));
+    return RotatedBox(
+        quarterTurns: -1,
+        child: ListWheelScrollView(
+          onSelectedItemChanged: (x) {
+            specs.backgroundColor = backgroundColors[x];
+            setState(() {
+              selectedIndex = x;
+            });
+          },
+          diameterRatio: 1.5,
+          controller: _scrollController,
+          children: List.generate(
+              itemCount,
+              (x) => Container(
+                  alignment: Alignment.center,
+                  child: CircularColor(
+                    color: backgroundColors[x],
+                    selectedColor: backgroundColors[selectedIndex],
+                    borderRadius: x == selectedIndex ? 70 : 45,
+                  ))),
+          itemExtent: itemWidth,
+        ));
   }
 }
 

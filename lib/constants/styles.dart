@@ -6,5 +6,5 @@ const double font_h1 = 48.0;
 const double font_h2 = 32.0;
 const double font_h3 = 24.0;
 const double font_h4 = 18.0;
-const double font_h5 = 12.0;
-const double font_h6 = 9.0;
+const double font_h5 = 14.0;
+const double font_h6 = 12.0;
