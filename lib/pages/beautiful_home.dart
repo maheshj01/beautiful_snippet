@@ -11,16 +11,38 @@ class BeautifulHome extends StatefulWidget {
 
 class _BeautifulHomeState extends State<BeautifulHome> {
   SnippetController snippetController = SnippetController();
+
+  Widget logoBuilder() {
+    return Padding(
+      padding: const EdgeInsets.only(top: padding_large),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          Text('Beautiful',
+              style: TextStyle(
+                  color: specs.backgroundColor == white ? white : black,
+                  fontWeight: FontWeight.bold,
+                  fontSize: font_h2,
+                  height: -1)),
+          Text('Snippet',
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.pinkAccent,
+                  fontSize: font_h5)),
+        ],
+      ),
+    );
+  }
+
+  late SpecsModel specs;
   @override
   Widget build(BuildContext context) {
-    final specs = Provider.of<SpecsModel>(context, listen: false);
+    specs = Provider.of<SpecsModel>(context, listen: false);
     return Scaffold(
       backgroundColor: specs.backgroundColor,
       appBar: AppBar(
-        title: Text('$APP_TITLE',
-            style: TextStyle(
-                color: specs.backgroundColor == white ? white : black,
-                fontSize: font_h3)),
+        title: logoBuilder(),
         backgroundColor: specs.backgroundColor == white ? black : white,
         centerTitle: false,
         actions: [
