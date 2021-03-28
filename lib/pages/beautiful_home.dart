@@ -29,7 +29,7 @@ class _BeautifulHomeState extends State<BeautifulHome> {
               style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Colors.pinkAccent,
-                  fontSize: font_h5)),
+                  fontSize: font_h6)),
         ],
       ),
     );
