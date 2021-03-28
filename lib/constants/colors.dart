@@ -14,10 +14,11 @@ Color orange = Colors.amberAccent.shade400;
 const List<Color> backgroundColors = [
   Colors.blueAccent,
   Colors.greenAccent,
+  Colors.pinkAccent,
   Colors.white,
-  Colors.orange,
-  Colors.purple,
-  Colors.red,
+  Colors.orangeAccent,
+  Colors.purpleAccent,
+  Colors.redAccent,
 ];
 const List<Color> borderColors = [
   Colors.black,
