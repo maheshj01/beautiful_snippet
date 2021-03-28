@@ -1,10 +1,10 @@
 import 'package:beautiful_snippet/exports.dart';
 import 'package:beautiful_snippet/models/specsmodel.dart';
+import 'package:beautiful_snippet/widgets/bs_dropdown.dart';
 import 'package:beautiful_snippet/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:beautiful_snippet/utils/extensions.dart';
 
 class SideBar extends StatefulWidget {
   @override
@@ -98,7 +98,25 @@ class _SideBarState extends State<SideBar> {
       case 'Background':
         return _backgroundTab();
       case 'Code Theme':
-        return Container();
+        return Column(
+          children: [
+            _headerBuilder('Language'),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: BSDropdownMenu(
+                selectedLanguage,
+                languages,
+                (String x) {
+                  setState(() {
+                    selectedLanguage = x;
+                  });
+                },
+                hintText: 'Select language',
+              ),
+            ),
+            _headerBuilder('Theme'),
+          ],
+        );
       default:
         return Container();
     }
