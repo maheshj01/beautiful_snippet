@@ -17,7 +17,7 @@ const List<Color> backgroundColors = [
   Colors.pinkAccent,
   Colors.white,
   Colors.orangeAccent,
-  Colors.purpleAccent,
+  Colors.deepPurpleAccent,
   Colors.redAccent,
 ];
 const List<Color> borderColors = [
