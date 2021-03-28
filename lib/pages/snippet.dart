@@ -144,13 +144,13 @@ class _CodeEditorState extends State<CodeEditor> {
     return CodeField(
       controller: _codeController!,
       cursorColor: Colors.blueAccent,
-      minLines: 10,
+      minLines: 15,
       padding: EdgeInsets.symmetric(
             horizontal: padding_small,
           ) +
           EdgeInsets.only(bottom: padding_small),
       onChange: (x) => widget.onChange!(x),
-      lineNumberStyle: LineNumberStyle(margin: 25.0),
+      lineNumberStyle: LineNumberStyle(margin: 25.0, width: 50),
       decoration: BoxDecoration(
           color: widget.backgroundColor,
           borderRadius: BorderRadius.only(

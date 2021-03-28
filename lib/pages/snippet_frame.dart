@@ -108,11 +108,13 @@ class _ColorPickerState extends State<ColorPicker> {
     selectedIndex = itemCount ~/ 2;
     _scrollController =
         FixedExtentScrollController(initialItem: itemCount ~/ 2);
+    specs = Provider.of<SpecsModel>(context, listen: false);
+    selectedIndex = backgroundColors.indexOf(specs.backgroundColor);
   }
 
+  late SpecsModel specs;
   @override
   Widget build(BuildContext context) {
-    final specs = Provider.of<SpecsModel>(context, listen: false);
     return Center(
         child: RotatedBox(
             quarterTurns: -1,

@@ -10,14 +10,15 @@ class SpecsModel extends ChangeNotifier {
   Color _borderColor = Colors.black;
   AppTheme _theme = AppTheme.dark;
   CodeTheme _codeTheme = CodeTheme.monokai;
-  bool _hasBorder = true;
-  String _sourceCode='///·Lets·write·some·Beautiful·code';
+  bool _hasBorder = false;
+  String _sourceCode = '///·Lets·write·some·Beautiful·code';
 
   String get sourceCode => _sourceCode;
   set sourceCode(String code) {
     _sourceCode = code;
     notifyListeners();
   }
+
   Color get backgroundColor => _backgroundColor;
   set backgroundColor(Color bgColor) {
     _backgroundColor = bgColor;
