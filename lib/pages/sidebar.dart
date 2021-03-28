@@ -17,20 +17,10 @@ class _SideBarState extends State<SideBar> {
       children: [
         Text(
           '$title',
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+          style: TextStyle(fontWeight: FontWeight.w400, fontSize: font_h4),
         ),
         child ?? Container()
       ],
-    );
-  }
-
-  Widget subTitle(String subtitle) {
-    return Text(
-      '$subtitle',
-      style: TextStyle(
-          color: black.withOpacity(0.6),
-          fontWeight: FontWeight.w600,
-          fontSize: font_h4),
     );
   }
 
@@ -64,15 +54,49 @@ class _SideBarState extends State<SideBar> {
   void initState() {
     // TODO: implement initState
     specs = Provider.of<SpecsModel>(context, listen: false);
+    selectedTab = titles[0];
     super.initState();
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        padding: EdgeInsets.all(padding_medium),
-        child: Column(
+  Widget _tab(String title, bool isSelected, Function(String)? ontap) {
+    return GestureDetector(
+      onTap: () => ontap!(title),
+      child: Container(
+        decoration: BoxDecoration(
+            color: isSelected ? grey.withOpacity(0.5) : null,
+            borderRadius: BorderRadius.circular(4)),
+        padding: const EdgeInsets.all(8.0),
+        child: Text(
+          '$title',
+          style: TextStyle(
+              fontWeight: isSelected ? FontWeight.bold : FontWeight.w400,
+              fontSize: font_h4),
+        ),
+      ),
+    );
+  }
+
+  Widget _headerTabsBuilder(
+      String selected, List<String> titles, Function(String) onChange) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: List.generate(
+          titles.length,
+          (x) => _tab(
+              titles[x], selected == titles[x], (title) => onChange(title))),
+    );
+  }
+
+  Widget _bodyTabsBuilder(String headerTitle) {
+    switch (headerTitle) {
+      case 'Header':
+        return Padding(
+            padding: const EdgeInsets.symmetric(vertical: padding_small),
+            child: _colorsSelector(specs.snippetHeaderColor, (x) {
+              specs.snippetHeaderColor = x;
+            }, colors: snippetHeaderColors));
+      case 'Background':
+        return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _headerBuilder('Border',
@@ -91,24 +115,57 @@ class _SideBarState extends State<SideBar> {
                     }, colors: borderColors))
                 : Container(),
             hMargin(),
-            Padding(
-              padding: const EdgeInsets.only(top: padding_small),
-              child: _headerBuilder(
-                'Snippet Editor',
-              ),
+            SizedBox(
+              height: padding_small,
             ),
-            subTitle('Header'),
-            Padding(
-                padding: const EdgeInsets.symmetric(vertical: padding_small),
-                child: _colorsSelector(specs.snippetHeaderColor, (x) {
-                  specs.snippetHeaderColor = x;
-                }, colors: snippetHeaderColors)),
-            subTitle('background'),
+            _headerBuilder(
+              'Snippet Background',
+            ),
             Padding(
                 padding: const EdgeInsets.symmetric(vertical: padding_small),
                 child: _colorsSelector(specs.snippetBackgroundColor, (x) {
                   specs.snippetBackgroundColor = x;
                 }, colors: snippetBackgroundColors)),
+          ],
+        );
+      case 'Code Theme':
+        return Container();
+      default:
+        return Container();
+    }
+  }
+
+  List<String> titles = ['Header', 'Background', 'Code Theme'];
+  late String selectedTab;
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Container(
+        padding: EdgeInsets.all(padding_medium),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(
+                  top: padding_small, bottom: padding_medium),
+              child: _headerBuilder(
+                'Snippet Editor',
+              ),
+            ),
+            hMargin(),
+            _headerTabsBuilder(selectedTab, titles, (x) {
+              setState(() {
+                selectedTab = x;
+              });
+            }),
+            hMargin(),
+            Container(
+                height: MediaQuery.of(context).size.height / 2,
+                child: IndexedStack(
+                  index: titles.indexOf(selectedTab),
+                  children: List.generate(
+                      titles.length, (k) => _bodyTabsBuilder(titles[k])),
+                )),
           ],
         ),
       ),
