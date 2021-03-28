@@ -1,8 +1,11 @@
+import 'package:beautiful_snippet/exports.dart';
+import 'package:beautiful_snippet/models/specsmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:beautiful_snippet/constants/colors.dart';
 import 'package:code_text_field/code_text_field.dart';
 import 'package:flutter_highlight/theme_map.dart';
 import 'package:highlight/languages/all.dart';
+import 'package:provider/provider.dart';
 
 class SnippetBuilder extends StatefulWidget {
   final double borderRadius;
@@ -21,12 +24,13 @@ class SnippetBuilder extends StatefulWidget {
 
 class _SnippetBuilderState extends State<SnippetBuilder> {
   Widget build(BuildContext context) {
+    final specs = Provider.of<SpecsModel>(context, listen: false);
     return Container(
       alignment: Alignment.center,
       decoration: BoxDecoration(
         color: white, //TODO: ADD BACKGROUND CODE COLOR
         borderRadius: BorderRadius.circular(widget.borderRadius),
-        border: Border.all(color: red),
+        border: specs.hasBorder ? Border.all(color: specs.borderColor) : null,
         boxShadow: [
           BoxShadow(
               blurRadius: 15,
@@ -77,7 +81,7 @@ class HeaderBuilder extends StatelessWidget {
           children: [
             circle(red),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              padding: const EdgeInsets.symmetric(horizontal: padding_small),
               child: circle(orange),
             ),
             circle(green),
@@ -135,9 +139,9 @@ class _CodeEditorState extends State<CodeEditor> {
       cursorColor: black,
       minLines: 10,
       padding: EdgeInsets.symmetric(
-            horizontal: 8,
+            horizontal: padding_small,
           ) +
-          EdgeInsets.only(bottom: 8),
+          EdgeInsets.only(bottom: padding_small),
       margin: EdgeInsets.only(bottom: 5),
       decoration: BoxDecoration(
           color: widget.backgroundColor,

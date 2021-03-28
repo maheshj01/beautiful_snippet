@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'package:beautiful_snippet/exports.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:beautiful_snippet/pages/snippet.dart';
@@ -41,24 +42,30 @@ class _SnippetFrameState extends State<SnippetFrame> {
     final specs = Provider.of<SpecsModel>(context, listen: false);
     final width = MediaQuery.of(context).size.width;
     return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Expanded(
           child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
-                child: Center(
-                    child: SingleChildScrollView(
-                        child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                      Container(
-                          height: 100,
-                          width: width * 0.5,
-                          alignment: Alignment.center,
-                          child: ColorPicker()),
+                child: SingleChildScrollView(
+                    child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                      SizedBox(
+                        height: 80,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                              height: 100,
+                              width: width * 0.5,
+                              margin: EdgeInsets.symmetric(horizontal: 50),
+                              child: ColorPicker()),
+                        ],
+                      ),
                       RepaintBoundary(
                         key: key,
                         child: Container(
@@ -71,9 +78,9 @@ class _SnippetFrameState extends State<SnippetFrame> {
                                     maxWidth: width * 0.6),
                                 child: SnippetBuilder())),
                       ),
-                    ]))),
+                    ])),
               ),
-              // Container(width: width * 0.25, child: SideBar()),
+              Container(width: width * 0.3, child: SideBar()),
             ],
           ),
         ),
@@ -115,7 +122,7 @@ class _ColorPickerState extends State<ColorPicker> {
                   selectedIndex = x;
                 });
               },
-              diameterRatio: 1.2,
+              diameterRatio: 1.5,
               controller: _scrollController,
               children: List.generate(
                   itemCount,
@@ -124,7 +131,7 @@ class _ColorPickerState extends State<ColorPicker> {
                       child: CircularColor(
                         color: backgroundColors[x],
                         selectedColor: backgroundColors[selectedIndex],
-                        borderRadius: x == selectedIndex ? 60 : 50,
+                        borderRadius: x == selectedIndex ? 60 : 45,
                       ))),
               itemExtent: itemWidth,
             )));
@@ -154,20 +161,99 @@ class CircularColor extends StatelessWidget {
       width: borderRadius,
       height: borderRadius,
       decoration: BoxDecoration(
-          border: isSelected ? Border.all(color: Colors.red, width: 2.0) : null,
+          border: isSelected ? Border.all(color: Colors.red, width: 4.0) : null,
           shape: BoxShape.circle,
           color: color),
     );
   }
 }
 
-class SideBar extends StatelessWidget {
+class SideBar extends StatefulWidget {
+  @override
+  _SideBarState createState() => _SideBarState();
+}
+
+class _SideBarState extends State<SideBar> {
+  Widget _headerBuilder(String title, {Widget? child}) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          '$title',
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+        ),
+        child ?? Container()
+      ],
+    );
+  }
+
+  Widget _borderColorsBuilder(Color selectedColor, Function(Color) onChange) {
+    return Consumer<SpecsModel>(
+        builder: (BuildContext _, SpecsModel model, Widget? child) {
+      return Wrap(
+        spacing: 10,
+        runSpacing: 5,
+        children: List.generate(
+            borderColors.length,
+            (x) => GestureDetector(
+                  onTap: () {
+                    specs.borderColor = borderColors[x];
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: borderColors[x],
+                        border: model.borderColor == borderColors[x]
+                            ? Border.all(color: Colors.deepPurple, width: 2)
+                            : null),
+                    height: 50,
+                    width: 50,
+                  ),
+                )),
+      );
+    });
+  }
+
+  late SpecsModel specs;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    specs = Provider.of<SpecsModel>(context, listen: false);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.black.withOpacity(0.5),
-      child: Column(
-        children: [Text('Some Text')],
+    return Scaffold(
+      body: Container(
+        padding: EdgeInsets.all(padding_medium),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _headerBuilder('Border',
+                child: CupertinoSwitch(
+                  value: specs.hasBorder,
+                  onChanged: (x) {
+                    specs.hasBorder = x;
+                  },
+                )),
+            specs.hasBorder
+                ? Padding(
+                    padding:
+                        const EdgeInsets.symmetric(vertical: padding_medium),
+                    child: _borderColorsBuilder(specs.backgroundColor, (x) {
+                      specs.borderColor = x;
+                    }))
+                : Container(),
+            // _headerBuilder('Editor',
+            //     child: CupertinoSwitch(
+            //       value: specs.hasBorder,
+            //       onChanged: (x) {
+            //         specs.hasBorder = x;
+            //       },
+            //     )),
+          ],
+        ),
       ),
     );
   }
