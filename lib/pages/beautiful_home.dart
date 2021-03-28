@@ -21,7 +21,7 @@ class _BeautifulHomeState extends State<BeautifulHome> {
         children: [
           Text('Beautiful',
               style: TextStyle(
-                  color: specs.backgroundColor == white ? white : black,
+                  color: white,
                   fontWeight: FontWeight.bold,
                   fontSize: font_h2,
                   height: -1)),
@@ -43,7 +43,8 @@ class _BeautifulHomeState extends State<BeautifulHome> {
       backgroundColor: specs.backgroundColor,
       appBar: AppBar(
         title: logoBuilder(),
-        backgroundColor: specs.backgroundColor == white ? black : white,
+        backgroundColor:
+            black, // specs.backgroundColor == white ? black : white,
         centerTitle: false,
         actions: [
           IconButton(
