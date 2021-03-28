@@ -58,16 +58,14 @@ class _SnippetFrameState extends State<SnippetFrame> {
                         SizedBox(
                           height: 80,
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                                height: 100,
-                                width: width * 0.5,
-                                margin: EdgeInsets.symmetric(horizontal: 50),
-                                child: ColorPicker()),
-                          ],
-                        ),
+                        Container(
+                            height: 100,
+                            width: width * 0.4,
+                            decoration: BoxDecoration(
+                                color: grey.withOpacity(0.2),
+                                borderRadius:
+                                    BorderRadius.circular(padding_small)),
+                            child: ColorPicker()),
                         RepaintBoundary(
                           key: key,
                           child: Container(
@@ -134,7 +132,7 @@ class _ColorPickerState extends State<ColorPicker> {
                       child: CircularColor(
                         color: backgroundColors[x],
                         selectedColor: backgroundColors[selectedIndex],
-                        borderRadius: x == selectedIndex ? 60 : 45,
+                        borderRadius: x == selectedIndex ? 70 : 45,
                       ))),
               itemExtent: itemWidth,
             )));
@@ -164,7 +162,9 @@ class CircularColor extends StatelessWidget {
       width: borderRadius,
       height: borderRadius,
       decoration: BoxDecoration(
-          border: isSelected ? Border.all(color: Colors.red, width: 4.0) : null,
+          border: isSelected
+              ? Border.all(color: Colors.deepPurple, width: 4.0)
+              : null,
           shape: BoxShape.circle,
           color: color),
     );
