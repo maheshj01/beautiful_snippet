@@ -5,15 +5,13 @@ class BsDropdownMenu extends StatefulWidget {
   final List<String> items;
   final Function(String) onSelected;
   final String? hintText;
-  final String? label;
-  const BsDropdownMenu(
-      {Key? key,
-      required this.selected,
-      required this.items,
-      required this.onSelected,
-      this.hintText,
-      this.label})
-      : super(key: key);
+  const BsDropdownMenu({
+    Key? key,
+    required this.selected,
+    required this.items,
+    required this.onSelected,
+    this.hintText,
+  }) : super(key: key);
   @override
   _BsDropdownMenuState createState() => _BsDropdownMenuState();
 }

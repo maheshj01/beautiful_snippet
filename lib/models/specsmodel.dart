@@ -15,6 +15,8 @@ class SpecsModel extends ChangeNotifier {
     final random = Random();
     final randomIndex = random.nextInt(backgroundColors.length);
     _backgroundColor = backgroundColors[randomIndex];
+    _language = 'Dart';
+    _codeTheme = 'Monokai';
   }
 
   late Color _backgroundColor;
@@ -22,9 +24,9 @@ class SpecsModel extends ChangeNotifier {
   Color _snippetHeaderColor = black;
   Color _borderColor = black;
   AppTheme _theme = AppTheme.dark;
-  CodeTheme _codeTheme = CodeTheme.monokai;
+  late String _codeTheme;
   bool _hasBorder = false;
-  String? _language;
+  late String _language;
   String _sourceCode = """///·Lets·write·some·Beautiful·code""";
   String get sourceCode => _sourceCode;
   set sourceCode(String code) {
@@ -32,7 +34,7 @@ class SpecsModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  String get language => _language!;
+  String get language => _language;
   set language(String code) {
     _language = code;
     notifyListeners();
@@ -74,8 +76,8 @@ class SpecsModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  CodeTheme get codeTheme => _codeTheme;
-  set codeTheme(CodeTheme theme) {
+  String get codeTheme => _codeTheme;
+  set codeTheme(String theme) {
     _codeTheme = theme;
     notifyListeners();
   }
