@@ -46,7 +46,8 @@ class _SnippetBuilderState extends State<SnippetBuilder> {
           CodeEditor(
             backgroundColor:
                 specs.snippetBackgroundColor, //TODO: ADD BACKGROUND CODE COLOR
-            theme: 'an-old-hope', //white
+            theme: specs.codeTheme.toLowerCase(), //white
+            language: specs.language.toLowerCase(),
             source: specs.sourceCode,
             onChange: (x) {
               specs.sourceCode = x;

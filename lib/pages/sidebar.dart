@@ -56,6 +56,8 @@ class _SideBarState extends State<SideBar> {
     // TODO: implement initState
     specs = Provider.of<SpecsModel>(context, listen: false);
     selectedTab = titles[0];
+    currentSelectedLanguage = specs.language;
+    currentSelectedTheme = specs.codeTheme;
     super.initState();
   }
 
@@ -104,10 +106,10 @@ class _SideBarState extends State<SideBar> {
                   selected: currentSelectedLanguage,
                   items: languages,
                   onSelected: (x) {
+                    specs.language = currentSelectedLanguage.toLowerCase();
                     setState(() {
                       currentSelectedLanguage = x;
                     });
-                    specs.language = currentSelectedLanguage!;
                   },
                 )),
             _headerBuilder('Theme'),
@@ -117,10 +119,10 @@ class _SideBarState extends State<SideBar> {
                   selected: currentSelectedTheme,
                   items: themes,
                   onSelected: (x) {
+                    specs.language = currentSelectedTheme;
                     setState(() {
                       currentSelectedTheme = x;
                     });
-                    specs.language = currentSelectedTheme!;
                   },
                 )),
           ],
@@ -200,13 +202,14 @@ class _SideBarState extends State<SideBar> {
     );
   }
 
-  String? currentSelectedLanguage;
-  String? currentSelectedTheme;
+  late String currentSelectedLanguage;
+  late String currentSelectedTheme;
   List<String> titles = [
     'Code',
     'Snippet',
   ];
   late String selectedTab;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
