@@ -4,6 +4,7 @@ import 'package:beautiful_snippet/exports.dart';
 import 'package:beautiful_snippet/pages/sidebar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:beautiful_snippet/pages/snippet.dart';
 import 'package:beautiful_snippet/utils/utility.dart';
 import 'package:beautiful_snippet/models/specsmodel.dart';
@@ -105,11 +106,14 @@ class _ColorPickerState extends State<ColorPicker> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    selectedIndex = itemCount ~/ 2;
     _scrollController =
         FixedExtentScrollController(initialItem: itemCount ~/ 2);
     specs = Provider.of<SpecsModel>(context, listen: false);
     selectedIndex = backgroundColors.indexOf(specs.backgroundColor);
+    SchedulerBinding.instance!.addPostFrameCallback((x) {
+      _scrollController.animateToItem(selectedIndex,
+          duration: Duration(milliseconds: 400), curve: Curves.bounceIn);
+    });
   }
 
   late SpecsModel specs;
@@ -118,6 +122,7 @@ class _ColorPickerState extends State<ColorPicker> {
     return RotatedBox(
         quarterTurns: -1,
         child: ListWheelScrollView(
+          physics: BouncingScrollPhysics(),
           onSelectedItemChanged: (x) {
             specs.backgroundColor = backgroundColors[x];
             setState(() {

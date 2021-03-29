@@ -30,14 +30,14 @@ const List<Color> borderColors = [
   Colors.green,
   Colors.red,
 ];
-const List<Color> snippetBackgroundColors = [
+List<Color> snippetBackgroundColors = [
   Color(0xff333333),
   Colors.black,
   Colors.white,
-  Colors.amberAccent,
+  Colors.amberAccent.shade100,
 ];
-const List<Color> snippetHeaderColors = [
+List<Color> snippetHeaderColors = [
   Colors.white,
   Colors.black,
-  Colors.amberAccent,
+  Colors.amberAccent.shade100,
 ];

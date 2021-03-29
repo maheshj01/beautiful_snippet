@@ -1,13 +1,26 @@
+import 'dart:math';
+
+import 'package:beautiful_snippet/constants/colors.dart';
 import 'package:flutter/material.dart';
 
 enum AppTheme { dark, light }
 enum CodeTheme { monokai }
 
 class SpecsModel extends ChangeNotifier {
-  Color _backgroundColor = Colors.white;
-  Color _snippetBackgroundColor = Colors.black;
-  Color _snippetHeaderColor = Colors.black;
-  Color _borderColor = Colors.black;
+  SpecsModel() {
+    init();
+  }
+
+  void init() {
+    final random = Random();
+    final randomIndex = random.nextInt(backgroundColors.length);
+    _backgroundColor = backgroundColors[randomIndex];
+  }
+
+  late Color _backgroundColor;
+  Color _snippetBackgroundColor = black;
+  Color _snippetHeaderColor = black;
+  Color _borderColor = black;
   AppTheme _theme = AppTheme.dark;
   CodeTheme _codeTheme = CodeTheme.monokai;
   bool _hasBorder = false;
