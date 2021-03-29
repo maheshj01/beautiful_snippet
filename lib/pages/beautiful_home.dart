@@ -16,7 +16,7 @@ class _BeautifulHomeState extends State<BeautifulHome> {
     return Padding(
       padding: const EdgeInsets.only(top: padding_large),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
+        mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Text('Beautiful',
@@ -43,9 +43,8 @@ class _BeautifulHomeState extends State<BeautifulHome> {
       backgroundColor: specs.backgroundColor,
       appBar: AppBar(
         title: logoBuilder(),
-        backgroundColor:
-            black, // specs.backgroundColor == white ? black : white,
-        centerTitle: false,
+        toolbarHeight: 70,
+        backgroundColor: black,
         actions: [
           IconButton(
               icon: Icon(

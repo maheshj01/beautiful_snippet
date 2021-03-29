@@ -64,18 +64,14 @@ class _SideBarState extends State<SideBar> {
       child: GestureDetector(
         onTap: () => ontap!(title),
         child: Container(
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-              color: isSelected ? grey.withOpacity(0.5) : null,
-              borderRadius: BorderRadius.circular(4)),
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            '$title',
-            style: TextStyle(
-                fontWeight: isSelected ? FontWeight.bold : FontWeight.w400,
-                fontSize: font_h5),
-          ),
-        ),
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+                color: isSelected ? grey.withOpacity(0.5) : null,
+                borderRadius: BorderRadius.circular(4)),
+            padding: const EdgeInsets.symmetric(
+                horizontal: padding_small, vertical: 12),
+            child: Icon(title == 'Code' ? Icons.code : Icons.color_lens,
+                color: isSelected ? black : grey)),
       ),
     );
   }
@@ -93,11 +89,9 @@ class _SideBarState extends State<SideBar> {
 
   Widget _bodyTabsBuilder(String headerTitle) {
     switch (headerTitle) {
-      case 'Header':
-        return _headerTab();
-      case 'Background':
+      case 'Snippet':
         return _backgroundTab();
-      case 'Code Theme':
+      case 'Code':
         return Column(
           children: [
             SizedBox(
@@ -105,19 +99,30 @@ class _SideBarState extends State<SideBar> {
             ),
             _headerBuilder('Language'),
             Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: BSDropdownMenu(
-                selectedLanguage,
-                languages,
-                (String x) {
-                  setState(() {
-                    selectedLanguage = x;
-                  });
-                },
-                hintText: 'Select language',
-              ),
-            ),
+                padding: const EdgeInsets.symmetric(vertical: padding_small),
+                child: BsDropdownMenu(
+                  selected: currentSelectedLanguage,
+                  items: languages,
+                  onSelected: (x) {
+                    setState(() {
+                      currentSelectedLanguage = x;
+                    });
+                    specs.language = currentSelectedLanguage!;
+                  },
+                )),
             _headerBuilder('Theme'),
+            Padding(
+                padding: const EdgeInsets.symmetric(vertical: padding_small),
+                child: BsDropdownMenu(
+                  selected: currentSelectedTheme,
+                  items: themes,
+                  onSelected: (x) {
+                    setState(() {
+                      currentSelectedTheme = x;
+                    });
+                    specs.language = currentSelectedTheme!;
+                  },
+                )),
           ],
         );
       default:
@@ -134,7 +139,7 @@ class _SideBarState extends State<SideBar> {
             margin: EdgeInsets.symmetric(vertical: padding_small),
             decoration: BoxDecoration(
                 color: lightGrey, borderRadius: BorderRadius.circular(5)),
-            padding: const EdgeInsets.all(padding_medium),
+            padding: const EdgeInsets.all(padding_small),
             child: _colorsSelector(specs.snippetHeaderColor, (x) {
               specs.snippetHeaderColor = x;
             }, colors: snippetHeaderColors)),
@@ -162,16 +167,23 @@ class _SideBarState extends State<SideBar> {
                 decoration: BoxDecoration(
                     color: lightGrey, borderRadius: BorderRadius.circular(5)),
                 padding: const EdgeInsets.symmetric(vertical: padding_medium),
+                margin: EdgeInsets.only(bottom: padding_small),
                 child: _colorsSelector(specs.borderColor, (x) {
                   specs.borderColor = x;
                 }, colors: borderColors))
             : Container(),
-        hMargin(),
-        SizedBox(
-          height: padding_small,
+        Padding(
+          padding: const EdgeInsets.only(top: 4.0),
+          child: _headerBuilder(
+            'Snippet Header',
+          ),
         ),
-        _headerBuilder(
-          'Snippet Background',
+        _headerTab(),
+        Padding(
+          padding: const EdgeInsets.only(top: 4.0),
+          child: _headerBuilder(
+            'Snippet Background',
+          ),
         ),
         Container(
             alignment: Alignment.centerLeft,
@@ -188,8 +200,12 @@ class _SideBarState extends State<SideBar> {
     );
   }
 
-  late String selectedLanguage = 'dart';
-  List<String> titles = ['Header', 'Background', 'Code Theme'];
+  String? currentSelectedLanguage;
+  String? currentSelectedTheme;
+  List<String> titles = [
+    'Code',
+    'Snippet',
+  ];
   late String selectedTab;
   @override
   Widget build(BuildContext context) {
@@ -203,7 +219,7 @@ class _SideBarState extends State<SideBar> {
               padding: const EdgeInsets.only(
                   top: padding_small, bottom: padding_medium),
               child: Text(
-                'Snippet Editor',
+                'Editor',
                 style:
                     TextStyle(fontWeight: FontWeight.w500, fontSize: font_h4),
               ),
@@ -216,12 +232,11 @@ class _SideBarState extends State<SideBar> {
             }),
             hMargin(),
             Container(
-                height: MediaQuery.of(context).size.height / 2,
                 child: IndexedStack(
-                  index: titles.indexOf(selectedTab),
-                  children: List.generate(
-                      titles.length, (k) => _bodyTabsBuilder(titles[k])),
-                )),
+              index: titles.indexOf(selectedTab),
+              children: List.generate(
+                  titles.length, (k) => _bodyTabsBuilder(titles[k])),
+            )),
           ],
         ),
       ),

@@ -11,11 +11,17 @@ class SpecsModel extends ChangeNotifier {
   AppTheme _theme = AppTheme.dark;
   CodeTheme _codeTheme = CodeTheme.monokai;
   bool _hasBorder = false;
-  String _sourceCode = '///·Lets·write·some·Beautiful·code';
-
+  String? _language;
+  String _sourceCode = """///·Lets·write·some·Beautiful·code""";
   String get sourceCode => _sourceCode;
   set sourceCode(String code) {
     _sourceCode = code;
+    notifyListeners();
+  }
+
+  String get language => _language!;
+  set language(String code) {
+    _language = code;
     notifyListeners();
   }
 
