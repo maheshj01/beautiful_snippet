@@ -157,6 +157,7 @@ class _CodeEditorState extends State<CodeEditor> {
               bottomLeft: Radius.circular(10),
               bottomRight: Radius.circular(10))),
       showLines: false,
+      onTap: () {},
       textStyle: TextStyle(
         fontFamily: 'SourceCode',
       ),
