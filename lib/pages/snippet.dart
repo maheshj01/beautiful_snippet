@@ -46,7 +46,7 @@ class _SnippetBuilderState extends State<SnippetBuilder> {
           CodeEditor(
             backgroundColor:
                 specs.snippetBackgroundColor, //TODO: ADD BACKGROUND CODE COLOR
-            theme: specs.codeTheme.toLowerCase(), //white
+            theme: specs.codeTheme.toLowerCase(),
             language: specs.language.toLowerCase(),
             source: specs.sourceCode,
             onChange: (x) {
@@ -122,9 +122,7 @@ class _CodeEditorState extends State<CodeEditor> {
   CodeController? _codeController;
 
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
+  Widget build(BuildContext context) {
     _codeController = CodeController(
         text: widget.source,
         language: allLanguages[widget.language],
@@ -138,10 +136,7 @@ class _CodeEditorState extends State<CodeEditor> {
               TextStyle(color: Colors.yellow, fontStyle: FontStyle.italic),
         },
         theme: themeMap[widget.theme]);
-  }
 
-  @override
-  Widget build(BuildContext context) {
     return CodeField(
       controller: _codeController!,
       cursorColor: Colors.blueAccent,

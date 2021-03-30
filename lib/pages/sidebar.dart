@@ -106,7 +106,7 @@ class _SideBarState extends State<SideBar> {
                   selected: currentSelectedLanguage,
                   items: languages,
                   onSelected: (x) {
-                    specs.language = currentSelectedLanguage.toLowerCase();
+                    specs.language = x.toLowerCase();
                     setState(() {
                       currentSelectedLanguage = x;
                     });
@@ -119,7 +119,7 @@ class _SideBarState extends State<SideBar> {
                   selected: currentSelectedTheme,
                   items: themes,
                   onSelected: (x) {
-                    specs.language = currentSelectedTheme;
+                    specs.codeTheme = x;
                     setState(() {
                       currentSelectedTheme = x;
                     });
