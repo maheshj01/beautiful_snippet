@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:beautiful_snippet/pages/snippet.dart';
+import 'package:dart_style/dart_style.dart';
 import 'package:beautiful_snippet/utils/utility.dart';
 import 'package:beautiful_snippet/models/specsmodel.dart';
 import 'package:provider/provider.dart';
