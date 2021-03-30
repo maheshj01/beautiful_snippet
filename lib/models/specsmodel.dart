@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:beautiful_snippet/constants/colors.dart';
+import 'package:beautiful_snippet/constants/constants.dart';
 import 'package:flutter/material.dart';
 
 enum AppTheme { dark, light }
@@ -27,11 +27,11 @@ class SpecsModel extends ChangeNotifier {
   late String _codeTheme;
   bool _hasBorder = false;
   late String _language;
-  String _sourceCode = """///·Lets·write·some·Beautiful·code""";
+  String _sourceCode = sourceTemplate;
   String get sourceCode => _sourceCode;
   set sourceCode(String code) {
     _sourceCode = code;
-    notifyListeners();
+    // notifyListeners();
   }
 
   String get language => _language;
