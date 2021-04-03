@@ -135,27 +135,26 @@ class _CodeEditorState extends State<CodeEditor> {
         stringMap: map,
         patternMap: {
           /// Widget color
-          r'[A-Z][a-z0-9]+\(.*\)': TextStyle(color: Colors.blue),
+          // r'[A-Z][a-z0-9]+\(.*\)': TextStyle(color: Colors.blue),
 
           r'^\\w*\\b(library|import|part of|part|export)\\b':
-              TextStyle(color: Colors.purple),
+              TextStyle(color: red),
 
           /// storage type annotation
-          r'@[a-zA-Z]+': TextStyle(color: Colors.cyan),
+          r'^@[a-zA-Z]+': TextStyle(color: Colors.cyan),
 
           /// constants and vars
-          r'(?<!\\$)\\b(true|false|null)\\b(?!\\$)': TextStyle(color: green),
+          // r'(?<!\\$)\\b(true|false|null)\\b(?!\\$)': TextStyle(color: green),
 
-          /// function name,
-          r'\([a-z]+[A-Z]+\\w+\)+\(.*\)':
-              TextStyle(color: Colors.greenAccent.shade700),
-
-          r'\([A-Z]+[a-zA-Z0-9]+\\w+\)+\(.*\)': TextStyle(color: Colors.cyan),
-
-          /// import as
-          r'\\b(as|show|hide)\\b': TextStyle(color: red)
+          //  function name,
+          r'\([a-z]+[A-Z]+\\w+\)+\(.*\)': TextStyle(color: Colors.amber),
 
           /// Widget color
+
+          // r'\([A-Z]+[a-zA-Z0-9]+\\w+\)+\(.*\)': TextStyle(color: Colors.cyan),
+
+          /// import as
+          // r'\\b(as|show|hide)\\b': TextStyle(color: red)
         },
         theme: themeMap[widget.theme]);
     if (!_codeController!.hasListeners) {
