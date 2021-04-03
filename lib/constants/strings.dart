@@ -4,11 +4,7 @@ const String APP_TITLE = 'Beautiful Snippet';
 List<String> languages = ['Dart'];
 List<String> themes = ['Gradient-Dark', 'An-Old-Hope', 'Xcode', 'Monokai'];
 
-const String sourceTemplate =
-    """// Copyright (c) 2019, the Dart project authors.  Please see the AUTHORS file
-// for details. All rights reserved. Use of this source code is governed by a
-// BSD-style license that can be found in the LICENSE file.
-
+const String sourceTemplate = """
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyBeautifulApp());
@@ -22,7 +18,7 @@ class MyBeautifulApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Container(),
+      home: MyApp(),
     );
   }
 }
