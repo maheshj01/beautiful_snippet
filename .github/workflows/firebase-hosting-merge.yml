@@ -18,7 +18,7 @@ jobs:
         with:
           channel: "stable"
           # flutter-version: "2.0.1"
-      - run: flutter build web
+      - run: flutter build web --release
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: "${{ secrets.GITHUB_TOKEN }}"
