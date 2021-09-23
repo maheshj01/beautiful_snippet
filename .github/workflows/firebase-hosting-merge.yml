@@ -2,7 +2,7 @@
 # https://github.com/firebase/firebase-tools
 
 name: Deploy to Firebase Hosting on merge
-"on":
+'on':
   push:
     branches:
       - master
@@ -17,12 +17,11 @@ jobs:
       - uses: subosito/flutter-action@v1
         with:
           channel: "stable"
-          # flutter-version: "2.0.1"
       - run: flutter build web --release
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
-          repoToken: "${{ secrets.GITHUB_TOKEN }}"
-          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_BEAUTIFUL_SNIPPET }}"
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_BEAUTIFUL_SNIPPET }}'
           channelId: live
           projectId: beautiful-snippet
         env:
