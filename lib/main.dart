@@ -5,10 +5,10 @@ import 'package:provider/provider.dart';
 import 'constants/constants.dart' show APP_TITLE;
 
 void main() {
-  runApp(MyApp());
+  runApp(BeautifulApp());
 }
 
-class MyApp extends StatelessWidget {
+class BeautifulApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(

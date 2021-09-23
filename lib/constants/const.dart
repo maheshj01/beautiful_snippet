@@ -8,3 +8,5 @@ const double padding_medium = 16.0;
 const double padding_large = 20.0;
 const double padding_XLarge = 24.0;
 
+const GITHUB_ASSET_PATH = 'assets/github_white.png';
+const String REPO_URL = 'https://github.com/maheshmnj/beautiful_snippet';

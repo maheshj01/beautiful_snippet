@@ -1,3 +1,5 @@
+import 'package:beautiful_snippet/utils/utility.dart';
+import 'package:beautiful_snippet/widgets/alert.dart';
 import 'package:flutter/material.dart';
 import 'package:beautiful_snippet/exports.dart';
 import 'package:beautiful_snippet/pages/snippet_frame.dart';
@@ -35,6 +37,26 @@ class _BeautifulHomeState extends State<BeautifulHome> {
     );
   }
 
+  void _openCustomDialog(BuildContext context) {
+    showGeneralDialog(
+        barrierColor: Colors.black.withOpacity(0.5),
+        transitionBuilder: (context, a1, a2, widget) {
+          return Transform.scale(
+              // offset: Offset(0, 100 * a1.value),
+              scale: a1.value,
+              child: BeautifulAlert(
+                title: 'About',
+              ));
+        },
+        transitionDuration: Duration(milliseconds: 300),
+        barrierDismissible: true,
+        barrierLabel: '',
+        context: context,
+        pageBuilder: (context, animation1, animation2) {
+          return Container();
+        });
+  }
+
   late SpecsModel specs;
   @override
   Widget build(BuildContext context) {
@@ -57,7 +79,20 @@ class _BeautifulHomeState extends State<BeautifulHome> {
               }),
           SizedBox(
             width: 10,
-          )
+          ),
+          IconButton(
+              icon: Image.asset(GITHUB_ASSET_PATH),
+              onPressed: () {
+                launchUrl(REPO_URL);
+              }),
+          SizedBox(
+            width: 10,
+          ),
+          IconButton(
+              icon: Icon(Icons.info),
+              onPressed: () {
+                _openCustomDialog(context);
+              }),
         ],
       ),
       body: SnippetFrame(
